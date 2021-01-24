@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:p="http://primefaces.org/ui">
+   <h:head>
+        <title>Clientes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:form id="frmPrincipal">  
+            <p:outputLabel value="Nombres cliente:"/>
+            <br/>
+            <p:inputText id="txtNombres" value="#{clienteController.nombresCliente}"/>
+            <br/>
+            <p:outputLabel value="Apellidos cliente:"/>
+            <br/>
+            <p:inputText id="txtApellidos" value="#{clienteController.apellidosCliente}"/>
+            <br/>
+            <br/>
+            <p:commandButton value="Guardar Nuevo" action="#{clienteController.guardar()}" update="dtClientes"/>
+            <br/>
+            <br/>
+            <p:dataTable id="dtClientes" var="var" value="#{clienteController.listaClientes}">
+                <p:column headerText="ID Cliente">
+                    <p:outputLabel value="#{var.idCliente}"/>
+                </p:column>
+                <p:column headerText="Nombres Cliente">
+                    <p:outputLabel value="#{var.nombresCliente}"/>
+                </p:column>
+                <p:column headerText="Apellidos Cliente">
+                    <p:outputLabel value="#{var.apellidosCliente}"/>
+                </p:column>
+                <p:column headerText="Actulizar">
+                    <p:commandButton value="Actualizar" oncomplete="PF('dlgActualizar').show()" update="frmActaulizar" action="#{clienteController.seleccionarCliente(var)}"/>
+                </p:column>
+                <p:column headerText="Eliminar">
+                    <p:commandButton value="Eliminar" action="#{clienteController.eliminar(var)}" update="dtClientes"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>  
+        
+        <p:dialog id="dlgActualizar" widgetVar="dlgActualizar">
+            <h:form id="frmActaulizar">
+                <p:outputLabel value="ID Cliente:"/>
+                <br/>
+                <p:outputLabel value="#{clienteController.clienteSeleccionado.idCliente}"/>
+                <br/>
+                <p:outputLabel value="Nombres cliente:"/>
+                <br/>
+                <p:inputText id="txtNombresA" value="#{clienteController.clienteSeleccionado.nombresCliente}"/>
+                <br/>
+                <p:outputLabel value="Apellidos cliente:"/>
+                <br/>
+                <p:inputText id="txtApellidosA" value="#{clienteController.clienteSeleccionado.apellidosCliente}"/>
+                <br/>
+                <br/>
+                <p:commandButton value="Actualizar" action="#{clienteController.actualizar()}" update="frmPrincipal:dtClientes" oncomplete="PF('dlgActualizar').hide()"/>
+                <br/>
+                
+            </h:form>
+            
+        </p:dialog>
+        
+        
+    </h:body>
+</html>
